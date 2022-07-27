@@ -1,0 +1,52 @@
+{
+  "partnerNumber": "DE398748",
+  "externalNumber": "12",
+  "name": "Test",
+  "surname": "Claim",
+  "dateOfBirth": 492307200000,
+  "gender": 1,
+  "mobilePhoneNumber": "041312062",
+  "phoneNumber": "034498765",
+  "email": "test_1626070528_722@msg-life.com",
+  "correspondenceLanguage": "DE",
+  "bankAccount": {
+    "id": 479878,
+    "iban": "DE89370400440532013000",
+    "bic": "COBADEFFXXX",
+    "bankName": "UPS",
+    "payoutBankAccount": true,
+    "collectionBankAccount": true,
+    "bankCode": null,
+    "accountNumber": null,
+    "bvrNumber": null,
+    "bankAccountId": 1
+  },
+  "payoutBankAccount": {
+    "id": 479878,
+    "iban": "DE89370400440532013000",
+    "bic": "COBADEFFXXX",
+    "bankName": "UPS",
+    "payoutBankAccount": true,
+    "collectionBankAccount": true,
+    "bankCode": null,
+    "accountNumber": null,
+    "bvrNumber": null,
+    "bankAccountId": 1
+  },
+  "deletionRequested": false,
+  "addresses": [
+    {
+      "id": 299534,
+      "street": "Titova cesta",
+      "houseNumber": "118",
+      "postalCode": "2000",
+      "place": "Maribor",
+      "country": 4,
+      "mainAddress": true,
+      "canton": null,
+      "cantonCode": null,
+      "countryISOCode": "DE"
+    }
+  ],
+  "realEstateAgency": false
+}

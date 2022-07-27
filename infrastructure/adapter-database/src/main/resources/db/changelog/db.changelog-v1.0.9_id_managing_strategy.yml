@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.9
+      author: Dani Navarro
+      changes:
+        - addColumn:
+            tableName: claim_payments
+            columns:
+              - column:
+                  name: salesforce_id
+                  type: varchar(255)
+

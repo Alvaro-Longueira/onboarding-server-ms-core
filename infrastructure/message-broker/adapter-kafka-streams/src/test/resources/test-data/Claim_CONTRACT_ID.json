@@ -1,0 +1,22 @@
+{
+  "id": "CLM_11111111",
+  "internal_id": 789,
+  "event_date": "2021-02-26T02:44:42.009420Z",
+  "notification_date": "2021-02-26T02:44:42.009420Z",
+  "entry_date": "2021-02-26T02:44:42.009420Z",
+  "contract_id": "CTC_11111111",
+  "offer_id": null,
+  "account_id": "ACT_11111111",
+  "type": "070101",
+  "coverage_id": "CBG_11111111",
+  "status": "CREATED",
+  "product_id": "PDT_11111111",
+  "insurance_id": "INS_11111111",
+  "without_coverage": false,
+  "symass_id": 432,
+  "version": 1,
+  "created_at": "2021-02-26T02:44:42.009420Z",
+  "created_by": "SYSTEM",
+  "updated_at": "2021-02-26T02:44:42.009420Z",
+  "updated_by": "SYSTEM"
+}

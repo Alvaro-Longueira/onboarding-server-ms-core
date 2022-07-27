@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.wefox.onboarding.server.ms.core.infrastructure.adapters.database.config.InfrastructureDatabaseAutoConfiguration

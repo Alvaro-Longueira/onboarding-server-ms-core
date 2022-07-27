@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.7
+      author: Daniel Navarro
+      changes:
+        - addColumn:
+            tableName: claims
+            columns:
+              - column:
+                  name: product_description
+                  type: varchar(255)
+        - dropNotNullConstraint:
+            tableName: claims
+            columnName: product_id
+            columnDataType: varchar(255)
+

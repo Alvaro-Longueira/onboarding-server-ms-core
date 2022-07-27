@@ -1,0 +1,155 @@
+wefox:
+  application:
+    market-id: ${APP_CONF_MARKET_ID:de}
+    symass-skip: ${APP_CONF_SYMASS_SKIP:it}
+    no-send-events: ${APP_CONF_NO_SEND_EVENTS:it}
+  common:
+    web:
+      security:
+        public-urls:
+          - /health
+          - /health/**
+          - /api-docs
+          - /api-docs/**
+          - /swagger-ui/**
+          - /swagger-ui.html
+          - /info
+          - /metrics/**
+        scopes:
+          - "${APP_OAUTH_SCOPE:onboarding-server-ms-core}"
+      client:
+        configs:
+          account-service:
+            base-url: ${APP_MS_ACCOUNT_URL:https://symassdev.one-wefoxgroup.cloud/}
+            security: ${APP_MS_ACCOUNT_SECURITY:CLIENT_CREDENTIALS}
+            # writrap: true
+            # common.web.client.configs.account-service.writrap: true
+          contract-service:
+            base-url: ${APP_MS_CONTRACT_URL:https://symassdev.one-wefoxgroup.cloud/}
+            security: ${APP_MS_CONTRACT_SECURITY:CLIENT_CREDENTIALS}
+    logging:
+      logbook:
+        enhance-mdc: true
+        obfuscate:
+          enabled: true
+          text: "XXX"
+          properties:
+            headers:
+              - Authorization
+              - X-Secret
+            parameters:
+              - access_token
+              - password
+              - first_name
+              - last_name
+              - birth_date
+              - credit_card
+              - cvc
+            write:
+              chunk-size: 2048
+
+server:
+  port: ${APP_SERVER_PORT:8080}
+  shutdown: graceful
+
+spring:
+  application:
+    name: onboarding-server-ms-core
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  profiles:
+    active: ${APP_ACTIVE_PROFILE:dev}
+    include:
+      - kafka
+      - kafka-streams
+  security:
+    oauth2:
+      client:
+        provider:
+          account-service:
+            token-uri: ${APP_MS_ACCOUNT_TOKEN:https://one-dev-symassapp.auth.eu-central-1.amazoncognito.com/oauth2/token}
+          contract-service:
+            token-uri: ${APP_MS_CONTRACT_TOKEN:https://one-dev-symassapp.auth.eu-central-1.amazoncognito.com/oauth2/token}
+        registration:
+          account-service:
+            authorization-grant-type: client_credentials
+            client-id: ${APP_MS_ACCOUNT_CLIENT_ID:2m89oncflpdc1gr0a72fngtr3a}
+            client-secret: ${APP_MS_ACCOUNT_CLIENT_SECRET:1asrlopa72q2v1tpv4le3mojpkinacbjqtku3qb2kv1k1c7434ib}
+          contract-service:
+            authorization-grant-type: client_credentials
+            client-id: ${APP_MS_CONTRACT_CLIENT_ID:2m89oncflpdc1gr0a72fngtr3a}
+            client-secret: ${APP_MS_CONTRACT_CLIENT_SECRET:1asrlopa72q2v1tpv4le3mojpkinacbjqtku3qb2kv1k1c7434ib}
+      resourceserver:
+        jwt:
+          issuer-uri: ${APP_OAUTH_SERVER:https://id-dev.wefox.com/auth/realms/wefox}
+          jwk-set-uri: ${APP_OAUTH_SERVER_CERTS:https://id-dev.wefox.com/auth/realms/wefox/protocol/openid-connect/certs}
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  # DATABASE
+  datasource:
+    url: jdbc:postgresql://${APP_POSTGRES_HOST:localhost}:${APP_POSTGRES_PORT:11008}/${APP_POSTGRES_DB:claim}?currentSchema=${APP_POSTGRES_SCHEMA:public}&ApplicationName=${spring.application.name}
+    username: ${APP_POSTGRES_USER:user}
+    password: ${APP_POSTGRES_PASSWORD:password}
+    hikari:
+      schema: ${APP_POSTGRES_SCHEMA:public}
+  sleuth.function.enabled: false
+
+# ACTUATOR ENDPOINTS
+management:
+  info:
+    git:
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+      base-path: /
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+      show-components: always
+  health:
+    diskspace:
+      enabled: false
+    db:
+      enabled: true
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+    binders:
+      enabled: true
+
+# OPENAPI GENERATION
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    oauth:
+      client-id: ${APP_OAUTH_CLIENT_ID:afr-test-client}
+  oauth:
+    token-url: ${APP_OAUTH_TOKEN_URL:https://id-dev.wefox.com/auth/realms/wefox/protocol/openid-connect/token}
+
+logbook:
+  format.style: json
+  exclude:
+    - /health
+    - /health/**
+    - /metrics/**
+    - /favicon.ico
+
+
+# LOGGING SECTION
+logging:
+  level:
+    root: INFO
+    # https://github.com/zalando/logbook#Installation
+    org.zalando.logbook: TRACE
+    org.springframework.web.reactive.function.client.ExchangeFunctions: WARN
+    org.apache.kafka.clients.consumer.internals.ConsumerCoordinator: WARN

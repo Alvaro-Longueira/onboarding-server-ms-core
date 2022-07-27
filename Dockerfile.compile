@@ -1,0 +1,27 @@
+FROM eclipse-temurin:17-jdk
+LABEL stage=compiler
+WORKDIR workdir
+
+COPY . .
+ARG NEXUS_USERNAME
+ARG NEXUS_PASSWORD
+RUN ./mvnw --settings settings.xml package
+
+# build
+FROM eclipse-temurin:17-jre
+LABEL stage=builder
+WORKDIR application
+
+COPY --from=compiler main/target/main.jar ./application.jar
+RUN java -Djarmode=layertools -jar application.jar extract
+
+# image
+FROM eclipse-temurin:17-jre
+WORKDIR application
+COPY --from=builder application/dependencies/ ./
+COPY --from=builder application/spring-boot-loader/ ./
+COPY --from=builder application/snapshot-dependencies/ ./
+COPY --from=builder application/application/ ./
+
+EXPOSE 8080
+ENTRYPOINT ["java","-Xms256m","-Xmx512m", "org.springframework.boot.loader.JarLauncher"]

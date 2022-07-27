@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.5
+      author: Daniel Navarro
+      changes:
+        - addColumn:
+            tableName: claim_payments
+            columns:
+              name: receiver_type
+              type: varchar(255)

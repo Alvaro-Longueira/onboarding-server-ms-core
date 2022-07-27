@@ -1,0 +1,57 @@
+spring:
+  cloud:
+    schema:
+      avro:
+        dynamic-schema-generation-enabled: true
+    stream:
+      default-binder: kafka
+      bindings:
+        # producers
+        claim-changed-event-out-0:
+          destination: ${APP_TOPIC_CLAIM_CHANGED_EVENT:topic-claim-changed-event}
+          content-type: application/*+avro
+          producer:
+            use-native-encoding: true
+      kafka:
+        binder:
+          brokers: ${APP_KAFKA_BROKERS:localhost:9092}
+          replication-factor: ${APP_KAFKA_REPLICATION_FACTOR:1}
+          auto-create-topics: ${APP_KAFKA_AUTO_CREATE_TOPICS:false}
+          required-acks: all
+          configuration:
+            security.protocol: ${APP_KAFKA_SECURITY_PROTOCOL:PLAINTEXT}
+            sasl.mechanism: ${APP_KAFKA_SASL:SCRAM-SHA-512}
+            ssl.truststore.location: ${APP_KAFKA_TRUSTSTORE:}
+            sasl.jaas.config: "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"${APP_KAFKA_USER:alice}\" password=\"${APP_KAFKA_PASSWORD:alice-secret}\";"
+          producer-properties:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+            schema.registry.url: ${APP_KAFKA_SCHEMA_REGISTRY_URL:http://localhost:8081}
+          consumer-properties:
+            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+            schema.registry.url: ${APP_KAFKA_SCHEMA_REGISTRY_URL:http://localhost:8081}
+            specific.avro.reader: true
+            #value.serializer: org.springframework.kafka.support.serializer.JsonSerializer
+            #spring.json.trusted.packages: com.wefox
+            # value.serializer: io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer
+            # https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html
+            # https://kafka.apache.org/documentation/#producerconfigs
+
+          # Setup kafka transaction
+          #transaction:
+            #transaction-id-prefix: tx-${spring.application.name:default}-
+            #producer:
+              #producer-properties:
+                #key.serializer: org.apache.kafka.common.serialization.StringSerializer
+                #value.serializer: io.confluent.kafka.serializers.KafkaJsonSerializer
+              #kafka-producer-properties:
+                #configuration:
+                  #max.in.flight.requests.per.connection: 1
+              #use-native-encoding: true
+          min-partition-count: ${APP_KAFKA_PARTITION_COUNT:3}
+
+        bindings:
+          claim-changed-event-out-0:
+            producer:
+              message-key-expression: headers['key']

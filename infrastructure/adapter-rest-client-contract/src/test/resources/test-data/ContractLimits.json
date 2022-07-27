@@ -1,0 +1,20 @@
+{
+  "contractLimits": [
+    {
+      "contractLimitType": "coverageType",
+      "amount": 100000000,
+      "insuredEventClass": "insuredEventClass",
+      "productNotation": "Car Liability Short Term v1",
+      "insuranceId": 65269
+    },
+    {
+      "contractLimitType": "Extended Car Rental Protection - Property damage",
+      "amount": 100000000,
+      "insuredEventClass": "Car",
+      "productNotation": "Car Liability Short Term v1",
+      "insuranceId": 65269
+    }
+  ],
+  "contractNumber": "126967",
+  "externalPolicyNumber": "c_1591699129_934"
+}

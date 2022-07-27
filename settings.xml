@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <servers>
+    <server>
+      <username>${env.NEXUS_USERNAME}</username>
+      <password>${env.NEXUS_PASSWORD}</password>
+      <id>repo-nexus</id>
+    </server>
+  </servers>
+  <profiles>
+    <profile>
+      <id>nexus</id>
+      <repositories>
+        <repository>
+          <snapshots/>
+          <id>repo-nexus</id>
+          <name>repo-nexus</name>
+          <url>https://registry.wefox.io/repository/maven/</url>
+        </repository>
+      </repositories>
+
+      <pluginRepositories>
+
+        <pluginRepository>
+          <snapshots/>
+          <id>repo-nexus</id>
+          <name>repo-nexus</name>
+          <url>https://registry.wefox.io/repository/maven/</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>nexus</activeProfile>
+  </activeProfiles>
+</settings>

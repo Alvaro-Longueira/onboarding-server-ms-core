@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.6
+      author: Daniel Navarro
+      changes:
+        - addColumn:
+            tableName: claim_payments
+            columns:
+              - column:
+                  name: e2e_external_id
+                  type: varchar(255)
+              - column:
+                  name: status
+                  type: varchar(255)
+              - column:
+                  name: sent_to_payout_date
+                  type: timestamp
+              - column:
+                  name: payment_date
+                  type: timestamp
+              - column:
+                  name: returned_payment_date
+                  type: timestamp

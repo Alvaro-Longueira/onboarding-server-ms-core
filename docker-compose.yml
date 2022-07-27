@@ -1,0 +1,173 @@
+version: "3.9"
+
+services:
+#  app:
+#    container_name: onboarding-server-ms-core-app
+#    image: wefox/onboarding-server-ms-core:latest
+#    networks:
+#      - onboarding-server-ms-core-net
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#      args:
+#        JAR_FILE: main/target/main.jar
+#    environment:
+#      APP_POSTGRES_HOST: "postgres"
+#      APP_POSTGRES_PORT: "5432"
+#      APP_POSTGRES_SCHEMA: "public"
+#      APP_POSTGRES_DB: "claim"
+#      APP_POSTGRES_USER: "user"
+#      APP_POSTGRES_PASSWORD: "password"
+#      APP_SERVER_PORT: "8080"
+#      APP_KAFKA_BROKERS: "kafka:29092"
+#      APP_KAFKA_SECURITY_PROTOCOL: "PLAINTEXT"
+#      APP_KAFKA_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+#      APP_KAFKA_TRUSTSTORE: ""
+#      APP_KAFKA_AUTO_CREATE_TOPICS: "true"
+#      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+#    ports:
+#      - "8101:8080"
+#      - "5005:5005"
+#    depends_on:
+#      - postgres
+#      - kafka
+
+  postgres:
+    container_name: onboarding-server-ms-core-db
+    image: postgres:12.4-alpine
+    networks:
+      - onboarding-server-ms-core-net
+    ports:
+      - "11008:5432"
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_DB: "claim"
+      POSTGRES_PASSWORD: "password"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.2.0
+    hostname: zookeeper
+    container_name: onboarding-server-ms-core-zookeeper
+    networks:
+      - onboarding-server-ms-core-net
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      #ALLOW_ANONYMOUS_LOGIN: yes
+
+  kafka:
+    image: confluentinc/cp-server:6.2.0
+    hostname: kafka
+    container_name: onboarding-server-ms-core-kafka
+    networks:
+      - onboarding-server-ms-core-net
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9101:9101"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka:29092
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+      CONFLUENT_METRICS_ENABLE: 'true'
+      CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+
+  schema-registry:
+    container_name: onboarding-server-ms-core-schema-registry
+    build:
+      context: docker/schema-registry
+      dockerfile: Dockerfile
+    hostname: schema-registry
+    networks:
+      - onboarding-server-ms-core-net
+    depends_on:
+      - zookeeper
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:29092
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      PORT: 8081
+    command: >
+      bash -c "./wait-for-it.sh --timeout=0 zookeeper:2181 && ./wait-for-it.sh --timeout=0 kafka:29092 && /etc/confluent/docker/run"
+
+  schema-registry-ui:
+    container_name: onboarding-server-ms-core-schema-registry-ui
+    build:
+      context: docker/schema-registry-ui
+      dockerfile: Dockerfile
+    hostname: schema-registry-ui
+    networks:
+      - onboarding-server-ms-core-net
+    ports:
+      - "8000:8000"
+    environment:
+      SCHEMAREGISTRY_URL: http://schema-registry:8081
+      PROXY: "true"
+      ALLOW_GLOBAL: "true"
+      ALLOW_TRANSITIVE: "true"
+      ALLOW_DELETION: "true"
+    depends_on:
+      - schema-registry
+    command: >
+      bash -c "./wait-for-it.sh --timeout=0 schema-registry:8081 && /run.sh"
+
+  rest-proxy:
+    container_name: onboarding-server-ms-core-kafka-rest-proxy
+    image: confluentinc/cp-kafka-rest:6.2.0
+    depends_on:
+      - zookeeper
+      - kafka
+      - schema-registry
+    networks:
+      - onboarding-server-ms-core-net
+    ports:
+      - "8082:8082"
+    hostname: kafka-rest-proxy
+    environment:
+      KAFKA_REST_HOST_NAME: kafka-rest-proxy
+      KAFKA_REST_BOOTSTRAP_SERVERS: kafka:29092
+      KAFKA_REST_LISTENERS: http://0.0.0.0:8082/
+      KAFKA_REST_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_REST_SCHEMA_REGISTRY_URL: http://schema-registry:8081/
+
+
+  kafdrop:
+    container_name: onboarding-server-ms-core-kafdrop
+    build:
+      context: ./docker/kafdrop
+      dockerfile: Dockerfile_kafdrop
+    restart: "no"
+    networks:
+      - onboarding-server-ms-core-net
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:29092"
+      SCHEMAREGISTRY_CONNECT: "http://schema-registry:8081"
+      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    depends_on:
+      - kafka
+
+networks:
+  onboarding-server-ms-core-net:

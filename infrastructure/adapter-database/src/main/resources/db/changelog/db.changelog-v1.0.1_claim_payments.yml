@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.1
+      author: Tadej Eker
+      changes:
+        - addUniqueConstraint:
+            tableName: claim_payments
+            columnNames: claim_payment_id
+            constraintName: uq_claim_payments_claim_payment_id
+            forIndexCatalogName: idx_claim_payments_claim_payment_id
+            validate: true
+        - addColumn:
+            tableName: claim_payments
+            columns:
+              name: type
+              type: varchar(255)

@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.1.2
+      author: Salva Roig
+      changes:
+        - dropNotNullConstraint:
+            tableName: claims
+            columnName: event_date
+            columnDataType: timestamp
+

@@ -1,0 +1,391 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0
+      author: DaniNavarro, Sergi Calvet, Tadej Eker
+      changes:
+        - createTable:
+            tableName: claims
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: claim_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: event_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: notification_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: entry_date
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: contract_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: offer_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: account_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: coverage_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: status
+                  type: varchar(255)
+                  defaultValue: 'CREATED'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: insurance_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: without_coverage
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: symass_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: m_version
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_created_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_updated_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: claims
+            columnNames: claim_id
+            constraintName: uq_claim_id
+            forIndexCatalogName: idx_claim_id
+            validate: true
+        - createTable:
+            tableName: claim_accounts
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: balance
+                  type: decimal(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: char(3)
+                  defaultValue: 'EUR'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: symass_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: claim_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_claim_account_claim
+                    referencedTableName: claims
+                    referencedColumnNames: id
+                    deleteCascade: NO ACTION
+              - column:
+                  name: m_version
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_created_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_updated_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            constraintName: claim_account_uq
+            columnNames: type, claim_id
+            tableName: claim_accounts
+            validate: true
+        - createTable:
+            tableName: claim_payments
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: claim_payment_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: decimal(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: char(3)
+                  defaultValue: 'EUR'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_reference
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: receiver_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: entry_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: symass_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: claim_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_claim_claim_payment
+                    referencedTableName: claims
+                    referencedColumnNames: id
+                    deleteCascade: NO ACTION
+              - column:
+                  name: m_version
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_created_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_updated_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: claim_account_bookings
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: amount
+                  type: decimal(19, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: char(3)
+                  defaultValue: 'EUR'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: entry_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: booking_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gl_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: insurance_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: symass_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: account_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_claim_account_booking_claim_account
+                    referencedTableName: claim_accounts
+                    referencedColumnNames: id
+                    deleteCascade: NO ACTION
+              - column:
+                  name: payment_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+                    foreignKeyName: fk_claim_account_booking_claim_payment
+                    referencedTableName: claim_payments
+                    referencedColumnNames: id
+                    deleteCascade: NO ACTION
+              - column:
+                  name: m_version
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_created_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m_updated_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: claim_type_settings
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  incrementBy: 1
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: coverage_type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: claim_type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

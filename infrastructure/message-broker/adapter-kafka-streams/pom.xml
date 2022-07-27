@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.wefox.onboarding.server.ms.core</groupId>
+    <artifactId>onboarding-infrastructure-message-broker</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <artifactId>onboarding-infrastructure-message-broker-adapter-kafka-streams</artifactId>
+  <name>Onboarding Server MS Core - Infrastructure - Message Broker - Adapter Kafka Streams</name>
+
+
+  <dependencies>
+    <!-- module dependencies -->
+    <dependency>
+      <groupId>com.wefox.onboarding.server.ms.core</groupId>
+      <artifactId>onboarding-application</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.wefox.onboarding.server.ms.core</groupId>
+      <artifactId>onboarding-infrastructure-message-broker-dto</artifactId>
+    </dependency>
+    <!-- common dependencies -->
+    <dependency>
+      <groupId>com.wefox.server.lib.common</groupId>
+      <artifactId>common-stream-kafka</artifactId>
+    </dependency>
+    <!-- TODO common module -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-stream-binder-kafka-streams</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.wefox.server.lib.common</groupId>
+      <artifactId>common-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.wefox.server.lib.common</groupId>
+      <artifactId>common-stream-kafka-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- TODO: workaround for this issue
+     https://stackoverflow.com/questions/66881210/spring-cloud-stream-kafka-streams-binder-kafkaexception-could-not-start-stream
+     -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.confluent</groupId>
+      <artifactId>kafka-streams-avro-serde</artifactId>
+    </dependency>
+
+    <!-- third party dependencies
+    <dependency>
+      <groupId>io.confluent</groupId>
+      <artifactId>kafka-json-schema-serializer</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.confluent</groupId>
+      <artifactId>kafka-json-serializer</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.confluent</groupId>
+      <artifactId>kafka-streams-json-schema-serde</artifactId>
+    </dependency>-->
+  </dependencies>
+</project>

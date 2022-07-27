@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.3
+      author: Tadej Eker
+      changes:
+        - addColumn:
+            tableName: claim_type_settings
+            columns:
+              - column:
+                  name: key_number_claim_type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: insured_event_class
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.1.1
+      author: Salvador Roig
+      changes:
+        - sqlFile:
+            dbms: '!h2, postgresql'
+            path: scripts/v1/afr_tables_removal.sql
+            relativeToChangelogFile: true
+            splitStatements: false
+        - dropTable:
+            tableName: claim_account_bookings
+        - dropTable:
+            tableName: claim_accounts
+        - dropTable:
+            tableName: claim_payments
+        - dropTable:
+            tableName: hist_claim_accounts
+        - dropTable:
+            tableName: hist_claim_payments

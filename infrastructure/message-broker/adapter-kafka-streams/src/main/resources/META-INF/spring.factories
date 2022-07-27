@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.wefox.onboarding.server.ms.core.infrastructure.messagebroker.adapters.kafka.streams.config.InfrastructureKafkaStreamsAutoConfiguration

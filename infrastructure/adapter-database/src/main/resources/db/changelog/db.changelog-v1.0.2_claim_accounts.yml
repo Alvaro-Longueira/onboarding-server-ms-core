@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.2
+      author: Petar Nikolov
+      changes:
+        - dropColumn:
+            tableName: claim_accounts
+            columnName: symass_id
+        - dropColumn:
+            tableName: claim_payments
+            columnName: type

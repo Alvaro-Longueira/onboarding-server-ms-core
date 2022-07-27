@@ -1,0 +1,182 @@
+{
+  "id": 126967,
+  "contractNumber": "126967",
+  "externalPolicyNumber": "c_1591699129_934",
+  "policyHolderNumber": "326107",
+  "created": 1591699128906,
+  "beginDate": 1591699128758,
+  "contractMaturity": 1591699128758,
+  "premium": 5.04,
+  "premiumWithTax": 6,
+  "tax": 0.96,
+  "annualPremium": null,
+  "annualPremiumWithTax": null,
+  "versionCreated": 1592085600000,
+  "contractBegin": 1591699128758,
+  "contractEnd": 1592085599999,
+  "paymentMethod": "COLLECTIVE_INVOICE",
+  "directCustomer": false,
+  "collectiveInvoice": {
+    "mandateId": 37289,
+    "validFrom": 1591699128758,
+    "validUntil": 1592085599999,
+    "created": 1591699128906,
+    "blocked": false,
+    "id": 1008,
+    "collectiveInvoiceHolder": "Assecco"
+  },
+  "insuredCar": {
+    "id": 9869,
+    "vehicleId": "W0L0AHL443653243145",
+    "vehicleHSN": "3001",
+    "vehicleTSN": "759",
+    "registrationNumber": null,
+    "ageOfYoungestDriver": 18,
+    "yearlyUsage": 5000,
+    "firstRegistrationDate": 1564557740498,
+    "insuredFirstRegistrationDate": 1564557740498,
+    "additionalDriver": true,
+    "licensePlate": "B-ONE 2018",
+    "registrationArea": "Berlin",
+    "previousInsurer": "AXA",
+    "policyNumberPreviousInsurance": "132435465543",
+    "newRegistration": null,
+    "currentMileage": 100000,
+    "carHolder": null,
+    "manufacturer": "CITROEN (F)",
+    "performance": "66",
+    "carType": "D RHY (C5 2.0 HDI)",
+    "vehicleType": "2",
+    "carUsageType": null,
+    "specialEquipmentValue": null,
+    "vehicleBodyType": null,
+    "vehicleBodyTypeDetailed": null,
+    "vehicleEngineType": null,
+    "vehicleEngineDisplacement": null,
+    "weightTotal": null,
+    "weightEmpty": null,
+    "vehicleHorsePower": null,
+    "frequentDriverPostalCode": null,
+    "frequentDriverLicenceDate": null,
+    "frequentDriverGender": null,
+    "frequentDriverNationality": null,
+    "frequentDriverDateOfBirth": null,
+    "frequentDriverResidencePermit": null,
+    "licensePlateType": "A",
+    "vehicleKW": null,
+    "vehicleValue": null,
+    "serialNumber": null,
+    "carCantonCode": null,
+    "eurotaxId": null
+  },
+  "insurances": [
+    {
+      "id": 65269,
+      "insuranceType": "Car",
+      "productType": "Car Liability Short Term",
+      "premium": 5.04,
+      "premiumWithTax": 6,
+      "tax": 0.96,
+      "grossPremium": 5.04,
+      "writtenPremiumRateWithoutTax": 5.04,
+      "writtenPremiumRateWithTax": 6,
+      "calculatedGrossPremium": 5.04,
+      "annualGrossPremium": 5.04,
+      "annualNetPremium": 5.04,
+      "firstPremiumAttributes": null,
+      "rider": false,
+      "writtenPremiumFrequency": "Single",
+      "deduction": null,
+      "previouslyInsuredElsewhere": false,
+      "discountFactor": 1,
+      "underwritingFactor": 1,
+      "insurancePeriod": 5,
+      "productId": 1101,
+      "productDescription": "Product Description",
+      "startDate": 1591699128758,
+      "coverages": [
+        {
+          "coverageType": "Car Liability base coverage",
+          "premium": 5.04,
+          "deduction": 0,
+          "subCoverages": [
+            {
+              "coverageType": "Extended Car Rental Protection - Personal Injury",
+              "coverageLimitDescription": "Up to 8.000.000 €",
+              "sumInsured": 8000000,
+              "deduction": 0
+            },
+            {
+              "coverageType": "Extended Car Rental Protection - Property damage",
+              "coverageLimitDescription": "Up to 100.000.000 €",
+              "sumInsured": 100000000,
+              "deduction": 0
+            },
+            {
+              "coverageType": "Claims under the Environmental Damage Act",
+              "coverageLimitDescription": "Up to 100.000.000 €",
+              "sumInsured": 100000000,
+              "deduction": 0
+            },
+            {
+              "coverageType": "Personal Injury",
+              "coverageLimitDescription": "Up to 8.000.000 €",
+              "sumInsured": 8000000,
+              "deduction": 0
+            },
+            {
+              "coverageType": "Property Damage",
+              "coverageLimitDescription": "Up to 100.000.000 €",
+              "sumInsured": 100000000,
+              "deduction": 0
+            }
+          ]
+        }
+      ],
+      "taxes": [
+        {
+          "id": 82567,
+          "taxRate": 19,
+          "taxType": "Insurance tax",
+          "includedInNetPremium": false,
+          "taxBase": 5.04,
+          "taxAmount": 0.96,
+          "firstPremiumAttributes": null
+        }
+      ],
+      "discounts": [],
+      "insuranceParameters": [],
+      "profitRate": 0,
+      "costRate": 0,
+      "commissionRate": null,
+      "safetyLoading": null,
+      "promotionalCode": null,
+      "promotionalCodeRelatedClientDetails": null
+    }
+  ],
+  "documents": [
+    {
+      "id": 132293,
+      "created": 1591699128906,
+      "validFrom": 1591699128758,
+      "expiredOn": 1592085599999,
+      "staticContentDescriptor": "car_short_tnc_v1_de.pdf",
+      "documentName": "126967-TERMS_CONDITIONS-1591699128906-CONTRACT_CREATION-34470.pdf",
+      "documentType": "TERMS_CONDITIONS",
+      "prettyName": "KFZ_ONE_Versicherungsbedingungen_Short_Term_Test_126967.pdf",
+      "duplicable": true,
+      "s3fileURI": "statics/car_short_tnc_v1_de.pdf"
+    }
+  ],
+  "productGeneration": 1,
+  "portfolioOwner": "ASEC - 1000",
+  "paymentFrequency": "Single",
+  "contractType": "CAR",
+  "productBundle": "CAR_SHORT_TERM",
+  "contractState": "ACTIVE",
+  "offerNumber": "K0005302",
+  "cancellationCorrespondenceAddresses": [],
+  "intermediaries": [],
+  "versionValidFrom": 1591699128758,
+  "versionValidUntil": 1592085599999
+}

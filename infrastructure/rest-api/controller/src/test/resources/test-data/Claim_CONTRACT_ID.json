@@ -1,0 +1,15 @@
+{
+  "id": "CLM_11111111",
+  "event_date": "2021-02-26T02:44:42.009420+01:00",
+  "notification_date": "2021-02-26T02:44:42.009420+01:00",
+  "entry_date": "2021-02-26T02:44:42.009420+01:00",
+  "contract_id": "CTC_11111111",
+  "offer_id": null,
+  "account_id": "ACT_11111111",
+  "type": "070101",
+  "coverage_id": "CBG_11111111",
+  "status": "CREATED",
+  "product_id": "PDT_11111111",
+  "insurance_id": "INS_11111111",
+  "without_coverage": false
+}

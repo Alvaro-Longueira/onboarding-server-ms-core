@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.10
+      author: Dani Navarro
+      changes:
+        - addColumn:
+            tableName: claim_account_bookings
+            columns:
+              - column:
+                  name: product_description
+                  type: varchar(255)
+        - dropNotNullConstraint:
+            tableName: claim_account_bookings
+            columnName: product_id
+            columnDataType: varchar(255)

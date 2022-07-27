@@ -1,0 +1,38 @@
+spring:
+  cloud:
+    stream:
+      binders:
+        kafka:
+          type: kafka
+        kstream:
+          type: kstream
+          environment:
+            spring.cloud.stream.kafka.streams.binder.brokers: ${APP_KAFKA_BROKERS:localhost:9092}
+            spring.cloud.stream.kafka.streams.binder.replication-factor: ${APP_KAFKA_REPLICATION_FACTOR:1}
+            spring.cloud.stream.kafka.streams.binder.auto-create-topics: ${APP_KAFKA_AUTO_CREATE_TOPICS:false}
+            spring.cloud.stream.kafka.streams.binder.configuration.security.protocol: ${APP_KAFKA_SECURITY_PROTOCOL:PLAINTEXT}
+            spring.cloud.stream.kafka.streams.binder.configuration.sasl.mechanism: ${APP_KAFKA_SASL:SCRAM-SHA-512}
+            spring.cloud.stream.kafka.streams.binder.configuration.default.value.serde: "io.confluent.kafka.streams.serdes.avro.GenericAvroSerde"
+            spring.cloud.stream.kafka.streams.binder.configuration.specific.avro.reader: true
+            spring.cloud.stream.kafka.streams.binder.configuration.schema.registry.url: ${APP_KAFKA_SCHEMA_REGISTRY_URL:http://localhost:8081}
+            spring.cloud.stream.kafka.streams.binder.configuration.sasl.jaas.config: "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"${APP_KAFKA_USER:alice}\" password=\"${APP_KAFKA_PASSWORD:alice-secret}\";"
+            spring.cloud.stream.kafka.streams.binder.configuration.commit.interval.ms: 1000
+            spring.cloud.stream.kafka.streams.binder.configuration.ssl.truststore.location: ${APP_KAFKA_TRUSTSTORE:}
+      bindings:
+        claim-changed-processor-in-0:
+          binder: kstream
+          destination: ${APP_TOPIC_CLAIM_CHANGED_EVENT:topic-claim-changed-event}
+          content-type: application/*+avro
+          group: claim-changed-processor-group
+          # https://cloud.spring.io/spring-cloud-static/spring-cloud-stream-binder-kafka/current/reference/html/spring-cloud-stream-binder-kafka.html#_state_store
+        claim-changed-processor-out-0:
+          binder: kstream
+          destination: ${APP_TOPIC_CLAIM_STATUS_CHANGED_EVENT:topic-claim-status-changed-event}
+          content-type: application/*+avro
+          group: claim-changed-processor-group
+      kafka:
+        streams:
+          binder:
+            functions:
+              claim-changed-processor:
+                application-id: ${spring.application.name}-claim-changed-processor

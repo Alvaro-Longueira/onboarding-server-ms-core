@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.1.3
+      author: Alvaro Longueira
+      changes:
+        - renameColumn:
+            tableName: claims
+            oldColumnName: symass_id
+            newColumnName: external_id
+        - renameColumn:
+            tableName: hist_claims
+            oldColumnName: symass_id
+            newColumnName: external_id
+        - addColumn:
+            tableName: claims
+            columns:
+              - column:
+                  name: context
+                  type: jsonb
+        - addColumn:
+            tableName: hist_claims
+            columns:
+              - column:
+                  name: context
+                  type: jsonb
+        - sqlFile:
+            dbms: '!h2, postgresql'
+            path: scripts/v2/claims_hist_fnc.sql
+            relativeToChangelogFile: true
+            splitStatements: false

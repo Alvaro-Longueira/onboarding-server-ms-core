@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.11
+      author: Tadej Eker
+      changes:
+        - dropNotNullConstraint:
+            tableName: claim_account_bookings
+            columnName: insurance_id

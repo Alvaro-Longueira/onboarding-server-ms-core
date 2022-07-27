@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.12
+      author: Dani Navarro
+      changes:
+        - modifyDataType:
+            tableName: claims
+            columnName: place_of_event
+            newDataType: text

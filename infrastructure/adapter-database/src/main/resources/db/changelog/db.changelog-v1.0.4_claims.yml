@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.4
+      author: Petar Nikolov
+      changes:
+        - addColumn:
+            tableName: claims
+            columns:
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: place_of_event
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+

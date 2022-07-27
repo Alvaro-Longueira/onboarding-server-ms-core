@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.wefox.onboarding.server.ms.core</groupId>
+    <artifactId>onboarding-infrastructure-message-broker</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <artifactId>onboarding-infrastructure-message-broker-dto</artifactId>
+  <name>Onboarding Server MS Core - Infrastructure - Message Broker - DTO</name>
+
+
+  <dependencies>
+    <!-- module dependencies -->
+    <dependency>
+      <groupId>com.wefox.onboarding.server.ms.core</groupId>
+      <artifactId>onboarding-domain</artifactId>
+    </dependency>
+    <!-- common dependencies -->
+    <dependency>
+      <groupId>com.wefox.server.lib.common</groupId>
+      <artifactId>common-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.wefox.server.lib.common</groupId>
+      <artifactId>common-async-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.wefox.server.lib.common</groupId>
+      <artifactId>common-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro-compiler</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.wefox.server.spec.avro</groupId>
+      <artifactId>claims-avro-spec</artifactId>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <!--<plugin>
+        <groupId>org.apache.avro</groupId>
+        <artifactId>avro-maven-plugin</artifactId>
+        <configuration>
+          &lt;!&ndash; Use private visibility for Avro class fields instead of public &ndash;&gt;
+          <fieldVisibility>PRIVATE</fieldVisibility>
+          &lt;!&ndash; Convert Avro logicalType uuid into Java UUID instead of String &ndash;&gt;
+          <customConversions>org.apache.avro.Conversions$UUIDConversion</customConversions>
+          &lt;!&ndash; Convert Avro logicalType decimal into Java BigDecimal instead of ByteBuffer &ndash;&gt;
+          <enableDecimalLogicalType>true</enableDecimalLogicalType>
+          &lt;!&ndash; Convert Avro string into Java String instead of CharSequence &ndash;&gt;
+          <stringType>String</stringType>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>schema</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
+              <outputDirectory>${project.build.directory}/generated-sources/avro/</outputDirectory>
+              <includes>
+                <include>**/*.avsc</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>-->
+    </plugins>
+  </build>
+</project>
